@@ -1,19 +1,24 @@
 let apples = [];
 let branches = [];
 let bottomRectApples = [];
+let trunkApple;
 
 function setup() {
   createCanvas(464, 649);// Set the canvas size
   /* added by individual */
   initializeBranches();
   initializeBottomRectApples();
+  initializeTrunkApple();
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);// Resize the canvas to the window's width and height
   /* added by individual */
+  apples = []; // Clear the apples array
+  bottomRectApples = []; // Clear the bottom rectangle apples array
   initializeBranches();
   initializeBottomRectApples();
+  initializeTrunkApple();
 }
 
 /* added by individual */
@@ -31,6 +36,7 @@ function drawCanvas() {
   drawRoots(canvasWidth, canvasHeight);// Draw roots
   drawBottomRectangle(canvasWidth, canvasHeight);// Draw bottom rectangle
   drawBranchesAndApples(canvasWidth, canvasHeight);// Draw branches and apples
+  trunkApple.draw(); // Draw the trunk apple
 }
 
 function drawOilPainting(w, h) {
@@ -121,7 +127,7 @@ function initializeBranches() {
     new Branch(275 / 464 * canvasWidth, 195 / 649 * canvasHeight, 275 / 464 * canvasWidth, 170 / 649 * canvasHeight),
     new Branch(232 / 464 * canvasWidth, 255 / 649 * canvasHeight, 232 / 464 * canvasWidth, 485 / 649 * canvasHeight)
   ];
-  branches.forEach(branch => branch.addApples(12));
+  branches.forEach(branch => branch.addApples(6));
 }
 
 /* added by individual */
@@ -148,6 +154,14 @@ function initializeBottomRectApples() {
   }
 }
 
+function initializeTrunkApple() {
+  let trunkX = width * 232 / 464;
+  let trunkY = height * 255 / 649;
+  let appleDiameter = random(30, 50);
+  trunkApple = new Apple(appleDiameter, false); // Trunk apple cannot fall
+  trunkApple.setPosition(trunkX, trunkY);
+}
+
 function updateApples() {
   apples.forEach(apple => {
     apple.update();
@@ -157,6 +171,8 @@ function updateApples() {
     apple.update(); // Ensure apples in bottom rectangle can grow
     apple.draw();
   });
+  trunkApple.update(); // Ensure the trunk apple can grow
+  trunkApple.draw();
 }
 /* end added by individual */
 
@@ -184,7 +200,6 @@ class Branch {// Branch class for managing the drawing of branches and apples
   addApples(numApples) {// Adds a specified number of apples along the branch
     let spacing = this.calculateSpacing(numApples);// Calculate spacing between apples along the branch based on the number of apples
     let attempts, maxAttempts = 100;// Temporary variable for attempt count in positioning apples
-
     for (let i = 0; i < numApples; i++) {
       let appleDiameter = random(20, 85);// Randomly determine the diameter for each apple
       let apple = new Apple(appleDiameter, true, this.x1, this.y1, this.x2, this.y2); // Apples on branches can fall
@@ -197,7 +212,6 @@ class Branch {// Branch class for managing the drawing of branches and apples
           break;
         }
       } while (this.apples.some(a => applesOverlap(a, apple)));// Check for overlapping apples
-
       if (attempts <= maxAttempts) {// If the maximum limit is not exceeded, draw and store apples
         this.apples.push(apple);
         /* added by individual */
