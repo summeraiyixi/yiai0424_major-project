@@ -6,19 +6,13 @@ let trunkApple;
 function setup() {
   createCanvas(464, 649);// Set the canvas size
   /* added by individual */
-  initializeBranches();
-  initializeBottomRectApples();
-  initializeTrunkApple();
+  initializeAll();// Initialize all elements
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);// Resize the canvas to the window's width and height
+  resizeCanvas(windowWidth, windowHeight);// Resize window's width and height
   /* added by individual */
-  apples = []; // Clear the apples array
-  bottomRectApples = []; // Clear the bottom rectangle apples array
-  initializeBranches();
-  initializeBottomRectApples();
-  initializeTrunkApple();
+  initializeAll();
 }
 
 /* added by individual */
@@ -63,7 +57,7 @@ function drawOilPainting(w, h) {
   let yDots = (h - 40) / 5.5;
   for (let i = 0; i < xDots; i++) {
     for (let j = 0; j < yDots; j++) {
-      ellipse(20 + i * 5.5, 20 + j * 5.5, 2, 2);
+      ellipse(20 + i * 5.5, 20 + j * 5.5, 2, 2);// Draw texture dots
     }
   }
 }
@@ -77,7 +71,7 @@ function drawRoots(canvasWidth, canvasHeight) {// Calculate and draw the roots r
   rect(rootX, rootY, rootWidth, rootHeight);
 }
 
-function drawBottomRectangle(canvasWidth, canvasHeight) {// Draw the bottom rectangle
+function drawBottomRectangle(canvasWidth, canvasHeight) {// Calculate and draw the bottom rectangle
   let rectX = canvasWidth * 120 / 464;
   let rectY = canvasHeight * 485 / 649;
   let rectW = canvasWidth * 240 / 464;
@@ -86,9 +80,9 @@ function drawBottomRectangle(canvasWidth, canvasHeight) {// Draw the bottom rect
   stroke(0);
   strokeWeight(1);
   fill(230, 197, 116);
-  rect(rectX, rectY, rectW, rectH);
+  rect(rectX, rectY, rectW, rectH); //Draw the main bottom rectangle
   fill(251, 88, 87);
-  rect(rectX, rectY, canvasWidth * 44 / 464, rectH);
+  rect(rectX, rectY, canvasWidth * 44 / 464, rectH);// Draw smaller rectangles
   rect(rectX + canvasWidth * 160 / 464, rectY, canvasWidth * 44 / 464, rectH);
   fill(135, 173, 128);
   rect(rectX + canvasWidth * 70 / 464, rectY, canvasWidth * 44 / 464, rectH);
@@ -97,18 +91,25 @@ function drawBottomRectangle(canvasWidth, canvasHeight) {// Draw the bottom rect
 
 function drawApplesOnRectangle(rectX, rectY, rectW, rectH) {
   bottomRectApples.forEach(apple => {
-    apple.update();
-    apple.draw();
+    apple.update();// Update each apple
+    apple.draw();// Draw each apple
   });
 }
 
 function drawBranchesAndApples(canvasWidth, canvasHeight) {// Draw branches and apples
-  branches.forEach(branch => {
-    branch.draw();
-  });
+  branches.forEach(branch => branch.draw());
 }
 
 /* added by individual */
+function initializeAll() {
+  apples = [];// Clear the apples array
+  branches = [];// Clear the branches array
+  bottomRectApples = [];// Clear the bottom rectangle apples array
+  initializeBranches();
+  initializeBottomRectApples();
+  initializeTrunkApple();
+}
+
 function initializeBranches() {
   let canvasWidth = width;
   let canvasHeight = height;
@@ -127,12 +128,11 @@ function initializeBranches() {
     new Branch(275 / 464 * canvasWidth, 195 / 649 * canvasHeight, 275 / 464 * canvasWidth, 170 / 649 * canvasHeight),
     new Branch(232 / 464 * canvasWidth, 255 / 649 * canvasHeight, 232 / 464 * canvasWidth, 485 / 649 * canvasHeight)
   ];
-  branches.forEach(branch => branch.addApples(6));
+  branches.forEach(branch => branch.addApples(6));// Add apples to each branch
 }
 
 /* added by individual */
 function initializeBottomRectApples() {
-  bottomRectApples = [];
   let rectX = width * 120 / 464;
   let rectY = height * 485 / 649;
   let rectW = width * 240 / 464;
@@ -143,13 +143,11 @@ function initializeBottomRectApples() {
     let attempts = 0, maxAttempts = 100;
     do {
       let randomX = random(rectX + appleDiameter / 2, rectX + rectW - appleDiameter / 2);
-      apple.setPosition(randomX, rectY + rectH / 2);
-      if (attempts++ > maxAttempts) {
-        break;
-      }
+      apple.setPosition(randomX, rectY + rectH / 2);// Set the apple position
+      if (attempts++ > maxAttempts) break;// Avoid infinite loop
     } while (bottomRectApples.some(a => applesOverlap(a, apple)));
     if (attempts <= maxAttempts) {
-      bottomRectApples.push(apple);
+      bottomRectApples.push(apple);// Add apple to array if no overlap
     }
   }
 }
@@ -159,20 +157,20 @@ function initializeTrunkApple() {
   let trunkY = height * 255 / 649;
   let appleDiameter = random(30, 50);
   trunkApple = new Apple(appleDiameter, false); // Trunk apple cannot fall
-  trunkApple.setPosition(trunkX, trunkY);
+  trunkApple.setPosition(trunkX, trunkY);// Set the trunk apple position
 }
 
 function updateApples() {
   apples.forEach(apple => {
     apple.update();
-    apple.draw();
+    apple.draw();// Draw each apple
   });
   bottomRectApples.forEach(apple => {
     apple.update(); // Ensure apples in bottom rectangle can grow
-    apple.draw();
+    apple.draw();// Draw each bottom rectangle apple
   });
   trunkApple.update(); // Ensure the trunk apple can grow
-  trunkApple.draw();
+  trunkApple.draw();// Draw the trunk apple
 }
 /* end added by individual */
 
@@ -190,7 +188,7 @@ class Branch {// Branch class for managing the drawing of branches and apples
     strokeWeight(1.2);
     line(this.x1, this.y1, this.x2, this.y2);// Draw the line representing the branch
     /* added by individual */
-    this.drawApples();
+    this.drawApples();// Draw the apples on the branch
   }
 
   drawApples() {// Draws the apples on the branch
@@ -239,7 +237,7 @@ class Apple {// Apple class for creating and drawing apples
     this.color1 = color(251, 88, 87);
     this.color2 = color(135, 173, 128);
     /* added by individual */
-    this.growthRate = random(0.01, 0.05);
+    this.growthRate = random(0.01, 0.05);// Random growth rate
     this.falling = false;
     this.canFall = canFall;
     this.branchX1 = branchX1;
@@ -257,41 +255,36 @@ class Apple {// Apple class for creating and drawing apples
   /* added by individual */
   update() {
     if (!this.falling) {
-      this.diameter += this.growthRate;
+      this.diameter += this.growthRate;// Increase diameter
       if (this.diameter >= this.targetDiameter) {
-        this.diameter = this.targetDiameter;
-        if (this.canFall) {
-          this.falling = true;
-        }
+        this.diameter = this.targetDiameter;// Cap diameter at target size
+        if (this.canFall) this.falling = true;// Enable falling if allowed
       }
     } else {
       this.y += 5; // Fall straight down
-
-      // Restart the cycle when the apple falls off the canvas
-      if (this.y - this.diameter / 2 > height) {
+      if (this.y - this.diameter / 2 > height) { // Check if apple falls off canvas
         let t = random(0, 1);
-        this.setPosition(lerp(this.branchX1, this.branchX2, t), lerp(this.branchY1, this.branchY2, t));
+        this.setPosition(lerp(this.branchX1, this.branchX2, t), lerp(this.branchY1, this.branchY2, t));// Reset position
         this.falling = false;
         this.diameter = 0; // Reset diameter to grow again
       }
     }
 
-    // Add Perlin noise to simulate natural growth
-    this.diameter += map(noise(this.noiseOffset), 0, 1, -0.1, 0.1);
-    this.noiseOffset += 0.05;
+    this.diameter += map(noise(this.noiseOffset), 0, 1, -0.1, 0.1);// Adjust diameter with Perlin noise
+    this.noiseOffset += 0.05;// Increment noise offset
   }/* end added by individual */
 
   draw() {// Draw the apple with split colors
-    if (random() < 0.5) {// Decide the split direction by different random number interval
+    if (random() < 0.5) {// Split horizontally
       fill(this.color1);// Set color arrangement by different split, color1 is red, color2 is green
-      arc(this.x, this.y, this.diameter, this.diameter, PI, TWO_PI);
+      arc(this.x, this.y, this.diameter, this.diameter, PI, TWO_PI);// Draw first half of apple
       fill(this.color2);
-      arc(this.x, this.y, this.diameter, this.diameter, 0, PI);// Split horizontally
-    } else {
+      arc(this.x, this.y, this.diameter, this.diameter, 0, PI);// Draw second half of apple
+    } else {// Split vertically
       fill(this.color1);
-      arc(this.x, this.y, this.diameter, this.diameter, -HALF_PI, HALF_PI);
+      arc(this.x, this.y, this.diameter, this.diameter, -HALF_PI, HALF_PI);// Draw first half of apple
       fill(this.color2);
-      arc(this.x, this.y, this.diameter, this.diameter, HALF_PI, -HALF_PI);// Split vertically
+      arc(this.x, this.y, this.diameter, this.diameter, HALF_PI, -HALF_PI);// Draw second half of apple
     }
   }
 }
