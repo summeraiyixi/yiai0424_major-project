@@ -1,7 +1,7 @@
 # yiai0424_major-project
 
 ### Group work until code number 242.
-![The inspiration 1](readImages/code_number.png)
+![note](readImages/code_number.png)
 ---
 
 ## my major project is Apple ripening and falling through the use of Berlin noise
