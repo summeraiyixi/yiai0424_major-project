@@ -128,7 +128,7 @@ function initializeBranches() {
     new Branch(275 / 464 * canvasWidth, 195 / 649 * canvasHeight, 275 / 464 * canvasWidth, 170 / 649 * canvasHeight),
     new Branch(232 / 464 * canvasWidth, 255 / 649 * canvasHeight, 232 / 464 * canvasWidth, 485 / 649 * canvasHeight)
   ];
-  branches.forEach(branch => branch.addApples(6));// Add apples to each branch
+  branches.forEach(branch => branch.addApples(5));// Add apples to each branch
 }
 
 /* added by individual */
@@ -233,11 +233,11 @@ class Apple {// Apple class for creating and drawing apples
     this.x = 0;
     this.y = 0;
     this.diameter = 0;
-    this.targetDiameter = diameter;
+    this.targetDiameter = 45;
     this.color1 = color(251, 88, 87);
     this.color2 = color(135, 173, 128);
     /* added by individual */
-    this.growthRate = random(0.01, 0.05);// Random growth rate
+    this.growthRate = random(0.04, 0.05);// Random growth rate
     this.falling = false;
     this.canFall = canFall;
     this.branchX1 = branchX1;
@@ -271,7 +271,7 @@ class Apple {// Apple class for creating and drawing apples
     }
 
     this.diameter += map(noise(this.noiseOffset), 0, 1, -0.1, 0.1);// Adjust diameter with Perlin noise
-    this.noiseOffset += 0.05;// Increment noise offset
+    this.noiseOffset += 0.1;// Increment noise offset
   }/* end added by individual */
 
   draw() {// Draw the apple with split colors
