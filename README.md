@@ -11,7 +11,7 @@ The work utilizes **Perlin noise and random values** to drive animation of ''App
 
 The design concept draws from a group project to explore the intersection of historical and futuristic art. In my individual work, I focus specifically on the apple itself, reimagining its past and future. 
 
-My artwork depicts the natural lifecycle of an apple—growing, maturing, and ultimately falling—as time passes. This temporal progression is reflected in the evolving background and the changing colors of the apple.
+My artwork depicts the natural lifecycle of an apple—growing, maturing, and ultimately falling—as time passes. This temporal progression is reflected in the evolving background and the changing colors of the apple. Additional, after the first generation of apples fall off, there will be a cycle of the next generation of apples growing, ripening, and falling off again.
 
 ![apple_fall](readImages/apple_fall.jpg)
 */ refer pic /*
