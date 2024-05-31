@@ -5,15 +5,19 @@
 
 The work utilizes **Perlin noise and random values** to drive animation of ''Apple Tree''. 
 
-The overall design concept follows the inspiration of a group project, demonstrating the natural growth process of an apple as it grows, matures, and eventually falls over time. The passage of time is expressed through changes in the background and the color of the apple. 
-
 *( *Please note that the artwork does not require interaction to observe the apple's generation process )*
 
 ## Animation and difference
 
-The biggest difference between my work and that of my teammates is that nearly all elements in my piece are animated. 
-- For example, the background, the position of the apple, and the color of the apple. 
-- Additionally, as the window is resized, my work adjusts accordingly and restarts the animation behavior.
+The design concept draws from a group project to explore the intersection of historical and futuristic art. In my individual work, I focus specifically on the apple itself, reimagining its past and future. 
+
+My artwork depicts the natural lifecycle of an apple—growing, maturing, and ultimately falling—as time passes. This temporal progression is reflected in the evolving background and the changing colors of the apple.
+
+![apple_fall](readImages/apple_fall.jpg)
+*/ refer pic /*
+
+The biggest difference between my work and my teammates is my apple  will fall, symbolizing the inevitable passage and impact of time.
+
 
 ## Technical interpretation
 
@@ -46,6 +50,12 @@ The biggest difference between my work and that of my teammates is that nearly a
 
 - Random values are used extensively throughout the code to determine various properties such as positions, colors, sizes, and growth rates.
 - Functions like **random()**  and **lerp()** (linear interpolation with random values) are used for creating randomness in positions and other properties.
+
+### Array
+- Referred to this web site below for ideas and ways to create how to drop the apple：https://happycoding.io/tutorials/p5js/arrays
+- initializes apples with random diameters:**new Apple(appleDiameter, false)**
+- updates the Y-coordinates of apples: **this.y += 5**
+- When objects move off the canvas, resets apple:**if (this.y - this.diameter / 2 > height) { this.setPosition(random(0, width), 0); }**
 
 
 ## Change of code
